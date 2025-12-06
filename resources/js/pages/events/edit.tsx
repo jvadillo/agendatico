@@ -361,6 +361,7 @@ export default function EventEdit({ event, towns, categories, places }: Props) {
                         onChange={(e) => setData('address', e.target.value)}
                         placeholder={t('publish.address_placeholder')}
                     />
+                    {errors.address && <p className="text-sm text-destructive mt-1">{errors.address}</p>}
                 </div>
 
                 {/* Organizer */}

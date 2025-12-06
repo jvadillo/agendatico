@@ -22,11 +22,12 @@ export default function Login({
     const { t } = useTranslation();
 
     return (
-        <div className="min-h-screen bg-background flex flex-col">
-            <Head title={t('auth.login_or_register')} />
+        <div className="mobile-container">
+            <div className="min-h-screen bg-background flex flex-col">
+                <Head title={t('auth.login_or_register')} />
 
-            {/* Header */}
-            <header className="p-4 flex items-center justify-between">
+                {/* Header */}
+                <header className="p-4 flex items-center justify-between">
                 <Link href="/" className="text-2xl font-bold text-primary">A</Link>
                 <button className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
                     <span className="text-xs">🌐</span>
@@ -175,15 +176,16 @@ export default function Login({
                 )}
             </main>
 
-            {/* Footer */}
-            <footer className="p-6 text-center text-xs text-muted-foreground">
-                <p>
-                    {t('auth.terms_notice')}{' '}
-                    <Link href="/terms" className="text-primary underline">{t('auth.terms')}</Link>
-                    {' '}{t('auth.and')}{' '}
-                    <Link href="/privacy" className="text-primary underline">{t('auth.privacy')}</Link>
-                </p>
-            </footer>
+                {/* Footer */}
+                <footer className="p-6 text-center text-xs text-muted-foreground">
+                    <p>
+                        {t('auth.terms_notice')}{' '}
+                        <Link href="/terms" className="text-primary underline">{t('auth.terms')}</Link>
+                        {' '}{t('auth.and')}{' '}
+                        <Link href="/privacy" className="text-primary underline">{t('auth.privacy')}</Link>
+                    </p>
+                </footer>
+            </div>
         </div>
     );
 }

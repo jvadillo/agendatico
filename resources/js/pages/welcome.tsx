@@ -30,11 +30,12 @@ export default function Welcome() {
     const { t } = useTranslation();
 
     return (
-        <div className="min-h-screen bg-black flex flex-col relative overflow-hidden">
-            <Head title={t('app.name')} />
+        <div className="mobile-container">
+            <div className="min-h-screen bg-black flex flex-col relative overflow-hidden">
+                <Head title={t('app.name')} />
 
-            {/* Header */}
-            <header className="absolute top-0 left-0 right-0 z-20 p-4 flex items-center gap-2">
+                {/* Header */}
+                <header className="absolute top-0 left-0 right-0 z-20 p-4 flex items-center gap-2">
                 <span className="text-2xl font-bold text-white">A</span>
                 <span className="text-sm text-white/80">{t('welcome.title')}</span>
             </header>
@@ -60,19 +61,20 @@ export default function Welcome() {
                 <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-black via-black/80 to-transparent" />
             </div>
 
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 pb-10 z-10">
-                <h1 className="text-4xl font-bold text-white mb-2">
-                    {t('welcome.headline')}
-                    <br />
-                    <span className="text-primary">{t('welcome.headline_highlight')}</span>
-                </h1>
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 pb-10 z-10">
+                    <h1 className="text-4xl font-bold text-white mb-2">
+                        {t('welcome.headline')}
+                        <br />
+                        <span className="text-primary">{t('welcome.headline_highlight')}</span>
+                    </h1>
 
-                <Link href="/events" className="block mt-8">
-                    <Button className="w-full h-14 text-lg font-semibold rounded-xl bg-primary hover:bg-primary/90">
-                        {t('welcome.get_started')}
-                    </Button>
-                </Link>
+                    <Link href="/events" className="block mt-8">
+                        <Button className="w-full h-14 text-lg font-semibold rounded-xl bg-primary hover:bg-primary/90">
+                            {t('welcome.get_started')}
+                        </Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );

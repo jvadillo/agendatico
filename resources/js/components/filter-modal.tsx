@@ -36,9 +36,12 @@ export function FilterModal({ isOpen, onClose, title, children, onApply, onClear
             />
             
             {/* Modal */}
-            <div className="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-background rounded-t-2xl max-h-[80vh] flex flex-col animate-in slide-in-from-bottom duration-300">
+            <div 
+                className="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-background rounded-t-2xl flex flex-col animate-in slide-in-from-bottom duration-300"
+                style={{ maxHeight: '80dvh' }}
+            >
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b border-border">
+                <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
                     <h2 className="text-lg font-semibold">{title}</h2>
                     <button 
                         onClick={onClose}
@@ -49,13 +52,16 @@ export function FilterModal({ isOpen, onClose, title, children, onApply, onClear
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex-1 overflow-y-auto p-4 min-h-0">
                     {children}
                 </div>
 
                 {/* Footer */}
                 {(onApply || onClear) && (
-                    <div className="flex gap-3 p-4 border-t border-border">
+                    <div 
+                        className="flex gap-3 p-4 border-t border-border shrink-0 bg-background"
+                        style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
+                    >
                         {onClear && (
                             <Button variant="outline" onClick={onClear} className="flex-1">
                                 {t('filters.clear')}

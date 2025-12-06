@@ -107,7 +107,10 @@
         "login_required": "Debes iniciar sesión para publicar un evento"
     },
     "auth": {
+        "login": "Iniciar sesión",
         "login_or_register": "Iniciar sesión o Registrarse",
+        "no_account": "¿No tienes una cuenta?",
+        "create_account": "Regístrate",
         "name": "Nombre",
         "email": "Correo electrónico",
         "email_placeholder": "nombre@ejemplo.com",

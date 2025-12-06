@@ -107,7 +107,10 @@
         "login_required": "You must log in to publish an event"
     },
     "auth": {
+        "login": "Log in",
         "login_or_register": "Log in or Sign up",
+        "no_account": "Don't have an account?",
+        "create_account": "Sign up",
         "name": "Name",
         "email": "Email",
         "email_placeholder": "name@example.com",

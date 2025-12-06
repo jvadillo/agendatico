@@ -62,6 +62,7 @@
         "to": "hasta",
         "open_maps": "Abrir en Maps",
         "share": "Compartir",
+        "link_copied": "¡Enlace copiado!",
         "views": "vistas",
         "favorites_count": "favoritos",
         "no_favorites": "Aún no tienes eventos favoritos",
@@ -167,5 +168,10 @@
         "favorite_added": "Añadido a favoritos",
         "favorite_removed": "Eliminado de favoritos",
         "error_generic": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "legal": {
+        "privacy_title": "Política de Privacidad",
+        "terms_title": "Términos y Condiciones",
+        "last_updated": "Última actualización"
     }
 }

@@ -1,5 +1,5 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { ChevronLeft, Heart, Clock, MapPin, ExternalLink, Instagram, MessageCircle, Globe, Pencil, Trash2, Eye } from 'lucide-react';
+import { ChevronLeft, Heart, Clock, MapPin, ExternalLink, Instagram, MessageCircle, Globe, Pencil, Trash2, Eye, Share2 } from 'lucide-react';
 import MobileLayout from '@/layouts/mobile-layout';
 import { useTranslation } from '@/hooks/use-translation';
 import { useFavorites } from '@/hooks/use-favorites';
@@ -95,6 +95,40 @@ export default function EventShow({ event }: Props) {
 
     const favorited = isFavorited(event.id);
 
+    const handleShare = async () => {
+        const shareUrl = window.location.href;
+        const shareData = {
+            title: event.title,
+            text: `${event.title} - ${formattedDate}`,
+            url: shareUrl,
+        };
+
+        // Check if Web Share API is available AND can share this data
+        if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+            try {
+                await navigator.share(shareData);
+                return;
+            } catch (err) {
+                // User cancelled or error - fall through to clipboard
+            }
+        }
+        
+        // Fallback: copy to clipboard
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+            alert(t('events.link_copied'));
+        } catch (err) {
+            // Final fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = shareUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert(t('events.link_copied'));
+        }
+    };
+
     const handleDelete = () => {
         if (confirm(t('publish.delete_confirm'))) {
             router.delete(`/events/${event.slug}`);
@@ -147,12 +181,20 @@ export default function EventShow({ event }: Props) {
                     <Link href="/" className="icon-btn-overlay">
                         <ChevronLeft className="w-5 h-5" />
                     </Link>
-                    <button
-                        onClick={() => toggleFavorite(event.id)}
-                        className="icon-btn-overlay"
-                    >
-                        <Heart className={cn('w-5 h-5', favorited && 'fill-current text-red-500')} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={handleShare}
+                            className="icon-btn-overlay"
+                        >
+                            <Share2 className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={() => toggleFavorite(event.id)}
+                            className="icon-btn-overlay"
+                        >
+                            <Heart className={cn('w-5 h-5', favorited && 'fill-current text-red-500')} />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -283,6 +325,18 @@ export default function EventShow({ event }: Props) {
                         </div>
                     </section>
                 )}
+
+                {/* Share Button */}
+                <section className="mb-6">
+                    <Button
+                        onClick={handleShare}
+                        variant="outline"
+                        className="w-full"
+                    >
+                        <Share2 className="w-4 h-4 mr-2" />
+                        {t('events.share')}
+                    </Button>
+                </section>
 
                 {/* Owner Actions */}
                 {event.is_owner && (

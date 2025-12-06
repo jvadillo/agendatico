@@ -175,7 +175,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                     <button
                         onClick={() => setShowLocationModal(true)}
                         className={cn(
-                            "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors",
+                            "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer",
                             filters.town 
                                 ? "bg-foreground text-background" 
                                 : "bg-foreground text-background"
@@ -187,7 +187,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                     <button
                         onClick={() => setShowDateModal(true)}
                         className={cn(
-                            "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors",
+                            "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer",
                             filters.date 
                                 ? "bg-foreground text-background" 
                                 : "bg-foreground text-background"
@@ -205,7 +205,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                             key={category.id}
                             onClick={() => handleCategoryClick(category.id)}
                             className={cn(
-                                "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border",
+                                "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border cursor-pointer",
                                 filters.category === String(category.id)
                                     ? "bg-foreground text-background border-foreground"
                                     : "bg-background text-foreground border-border hover:border-foreground/30"

@@ -33,6 +33,10 @@ Route::get('/api/places/search', [PlaceController::class, 'search'])->name('api.
 // Locale switching
 Route::post('/locale', [LocaleController::class, 'switch'])->name('locale.switch');
 
+// Legal pages
+Route::get('/privacy', fn() => Inertia::render('legal/privacy'))->name('privacy');
+Route::get('/terms', fn() => Inertia::render('legal/terms'))->name('terms');
+
 // Favorites page (public, works with local storage for guests)
 Route::get('/favorites', [FavoriteController::class, 'page'])->name('favorites');
 

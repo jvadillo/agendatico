@@ -131,6 +131,8 @@ export default function Register() {
                 <div className="grid grid-cols-3 gap-3">
                     <a
                         href="/auth/google/redirect"
+                        rel="external"
+                        data-inertia="false"
                         className="flex items-center justify-center h-12 border border-border rounded-xl hover:bg-secondary/50 transition-colors"
                     >
                         <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -142,12 +144,16 @@ export default function Register() {
                     </a>
                     <a
                         href="/auth/apple/redirect"
+                        rel="external"
+                        data-inertia="false"
                         className="flex items-center justify-center h-12 border border-border rounded-xl hover:bg-secondary/50 transition-colors"
                     >
                         <Apple className="w-5 h-5" />
                     </a>
                     <a
                         href="/auth/facebook/redirect"
+                        rel="external"
+                        data-inertia="false"
                         className="flex items-center justify-center h-12 border border-border rounded-xl hover:bg-secondary/50 transition-colors"
                     >
                         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2">

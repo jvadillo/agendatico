@@ -36,7 +36,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $locale = $request->cookie('locale', config('app.locale', 'es'));
+        // Use the locale set by DetectLocale middleware
+        $locale = app()->getLocale();
         
         // Load translations
         $translations = [];
@@ -52,6 +53,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'locale' => $locale,
+            'availableLocales' => ['es', 'en'],
             'translations' => $translations,
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),

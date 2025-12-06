@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LocaleController;
@@ -37,6 +38,17 @@ Route::get('/favorites', [FavoriteController::class, 'page'])->name('favorites')
 
 // Favorites API
 Route::get('/api/favorites', [FavoriteController::class, 'index'])->name('api.favorites.index');
+
+/*
+|--------------------------------------------------------------------------
+| Social Authentication Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])
+    ->name('social.redirect');
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])
+    ->name('social.callback');
 
 /*
 |--------------------------------------------------------------------------

@@ -71,9 +71,21 @@ export default function EventShow({ event }: Props) {
     const dateLocale = locale === 'es' ? es : enUS;
 
     const startDate = new Date(event.starts_at);
+    const endDate = event.ends_at ? new Date(event.ends_at) : null;
     const formattedDate = format(startDate, "d MMMM yyyy, EEEE", { locale: dateLocale });
     const formattedTime = format(startDate, 'HH:mm');
-    const endTime = event.ends_at ? format(new Date(event.ends_at), 'HH:mm') : null;
+    
+    // Check if end date is on a different day
+    const isSameDay = endDate && 
+        startDate.getFullYear() === endDate.getFullYear() &&
+        startDate.getMonth() === endDate.getMonth() &&
+        startDate.getDate() === endDate.getDate();
+    
+    const endTimeDisplay = endDate 
+        ? (isSameDay 
+            ? format(endDate, 'HH:mm')
+            : format(endDate, "d MMM, HH:mm", { locale: dateLocale }))
+        : null;
 
     const priceDisplay = event.price_type === 'free'
         ? t('events.free')
@@ -169,7 +181,7 @@ export default function EventShow({ event }: Props) {
                         <span className="primary-text capitalize">{formattedDate}</span>
                         <span className="secondary-text">
                             {t('events.from')} {formattedTime}
-                            {endTime && ` ${t('events.to')} ${endTime}`}
+                            {endTimeDisplay && ` ${t('events.to')} ${endTimeDisplay}`}
                         </span>
                     </div>
                 </div>

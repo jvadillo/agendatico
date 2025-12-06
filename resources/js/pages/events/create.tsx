@@ -373,7 +373,7 @@ export default function EventCreate({ towns, categories, places }: Props) {
                 {/* Social Links */}
                 <div className="space-y-4 mb-6">
                     <div>
-                        <Label htmlFor="instagram" className="flex items-center gap-2">
+                        <Label htmlFor="instagram" className="flex items-center gap-2 mb-1">
                             <Instagram className="w-4 h-4" />
                             {t('publish.instagram')}
                         </Label>
@@ -385,7 +385,7 @@ export default function EventCreate({ towns, categories, places }: Props) {
                         />
                     </div>
                     <div>
-                        <Label htmlFor="whatsapp" className="flex items-center gap-2">
+                        <Label htmlFor="whatsapp" className="flex items-center gap-2 mb-1">
                             <MessageCircle className="w-4 h-4" />
                             {t('publish.whatsapp')}
                         </Label>
@@ -397,13 +397,13 @@ export default function EventCreate({ towns, categories, places }: Props) {
                         />
                     </div>
                     <div>
-                        <Label htmlFor="website" className="flex items-center gap-2">
+                        <Label htmlFor="website" className="flex items-center gap-2 mb-1">
                             <Globe className="w-4 h-4" />
                             {t('publish.website')}
                         </Label>
                         <Input
                             id="website"
-                            type="url"
+                            type="text"
                             value={data.website_url}
                             onChange={(e) => setData('website_url', e.target.value)}
                             placeholder={t('publish.website_placeholder')}

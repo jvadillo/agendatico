@@ -47,6 +47,11 @@ class Event extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     */
+    protected $appends = ['image_url'];
+
+    /**
      * Boot the model.
      */
     protected static function boot()

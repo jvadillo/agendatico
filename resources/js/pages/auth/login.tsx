@@ -21,12 +21,12 @@ export default function Login({
     const { t } = useTranslation();
 
     return (
-        <div className="mobile-container">
-            <div className="min-h-screen bg-background flex flex-col">
-                <Head title={t('auth.login')} />
+        <div className="min-h-screen bg-background flex flex-col">
+            <Head title={t('auth.login')} />
 
             {/* Content */}
-            <main className="flex-1 px-6 pt-12">
+            <main className="flex-1 flex items-center justify-center px-6 py-12">
+                <div className="w-full max-w-md">
                 <h1 className="text-3xl font-bold mb-2">{t('auth.login')}</h1>
                 <p className="text-muted-foreground mb-6">
                     {t('auth.no_account')}{' '}
@@ -161,10 +161,9 @@ export default function Login({
                         {status}
                     </div>
                 )}
-            </main>
 
                 {/* Footer */}
-                <footer className="p-4 text-center text-xs text-muted-foreground">
+                <footer className="mt-8 text-center text-xs text-muted-foreground">
                     <p>
                         {t('auth.terms_notice')}{' '}
                         <Link href="/terms" className="text-primary underline">{t('auth.terms')}</Link>
@@ -172,7 +171,8 @@ export default function Login({
                         <Link href="/privacy" className="text-primary underline">{t('auth.privacy')}</Link>
                     </p>
                 </footer>
-            </div>
+                </div>
+            </main>
         </div>
     );
 }

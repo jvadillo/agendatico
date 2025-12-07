@@ -174,8 +174,8 @@ export default function EventEdit({ event, towns, categories, places }: Props) {
         <MobileLayout hideNav>
             <Head title={t('publish.edit_title')} />
 
-            {/* Header */}
-            <header className="sticky top-0 z-40 bg-background border-b border-border">
+            {/* Header - mobile only */}
+            <header className="sticky top-0 z-40 bg-background border-b border-border md:hidden">
                 <div className="flex items-center justify-between p-4">
                     <Link href={`/events/${event.slug}`} className="icon-btn">
                         <ChevronLeft className="w-5 h-5" />
@@ -188,7 +188,15 @@ export default function EventEdit({ event, towns, categories, places }: Props) {
             </header>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-4 pb-8">
+            <form onSubmit={handleSubmit} className="p-4 pb-8 md:max-w-2xl md:mx-auto md:py-8">
+                {/* Desktop title */}
+                <div className="hidden md:flex md:items-center md:justify-between md:mb-6">
+                    <h1 className="text-2xl font-bold">{t('publish.edit_title')}</h1>
+                    <Button type="button" variant="destructive" size="sm" onClick={handleDelete}>
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        {t('publish.delete')}
+                    </Button>
+                </div>
                 {/* Title */}
                 <div className="mb-4">
                     <Label htmlFor="title">{t('publish.event_title')}</Label>

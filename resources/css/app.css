@@ -154,10 +154,40 @@
 
 /* Mobile Container Styles */
 @layer components {
+    /* Responsive container - mobile first */
+    .responsive-container {
+        @apply bg-background relative overflow-x-hidden;
+        min-height: 100dvh;
+    }
+
+    /* Mobile: max-width and bottom padding for nav */
+    @media (max-width: 767px) {
+        .responsive-container {
+            @apply max-w-md mx-auto;
+            padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+        }
+    }
+
+    /* Tablet and up: full width, no bottom padding */
+    @media (min-width: 768px) {
+        .responsive-container {
+            @apply max-w-7xl mx-auto px-6;
+            padding-bottom: 2rem;
+        }
+    }
+
+    /* Legacy mobile-container for backward compatibility */
     .mobile-container {
         @apply max-w-md mx-auto bg-background relative overflow-x-hidden;
         min-height: 100dvh;
         padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    @media (min-width: 768px) {
+        .mobile-container {
+            @apply max-w-7xl px-6;
+            padding-bottom: 2rem;
+        }
     }
 
     .bottom-nav {

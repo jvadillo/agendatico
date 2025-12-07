@@ -99,6 +99,12 @@ export function useFavorites() {
     const toggleFavorite = useCallback(async (eventId: number) => {
         if (isLoading) return;
 
+        // Redirect to login if not authenticated
+        if (!auth.user) {
+            window.location.href = '/login';
+            return;
+        }
+
         const isFavorited = favorites.includes(eventId);
         const newFavorites = isFavorited
             ? favorites.filter(id => id !== eventId)

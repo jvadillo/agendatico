@@ -139,8 +139,8 @@ export default function EventCreate({ towns, categories, places }: Props) {
         <MobileLayout hideNav>
             <Head title={t('publish.title')} />
 
-            {/* Header */}
-            <header className="sticky top-0 z-40 bg-background border-b border-border">
+            {/* Header - mobile only */}
+            <header className="sticky top-0 z-40 bg-background border-b border-border md:hidden">
                 <div className="flex items-center justify-between p-4">
                     <Link href="/" className="icon-btn">
                         <ChevronLeft className="w-5 h-5" />
@@ -151,7 +151,9 @@ export default function EventCreate({ towns, categories, places }: Props) {
             </header>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-4 pb-8">
+            <form onSubmit={handleSubmit} className="p-4 pb-8 md:max-w-2xl md:mx-auto md:py-8">
+                {/* Desktop title */}
+                <h1 className="hidden md:block text-2xl font-bold mb-6">{t('publish.title')}</h1>
                 {/* Title */}
                 <div className="mb-4">
                     <Label htmlFor="title">{t('publish.event_title')}</Label>

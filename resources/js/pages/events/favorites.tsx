@@ -45,7 +45,7 @@ export default function Favorites({ events }: Props) {
             <Head title={t('nav.favorites')} />
 
             {/* Header */}
-            <header className="sticky top-0 z-40 bg-background border-b border-border">
+            <header className="sticky top-0 z-40 bg-background border-b border-border md:hidden">
                 <div className="flex items-center gap-3 p-4">
                     <Link href="/" className="icon-btn">
                         <ChevronLeft className="w-5 h-5" />
@@ -56,23 +56,26 @@ export default function Favorites({ events }: Props) {
 
             {/* Content */}
             <main className="p-4 safe-bottom">
+                {/* Desktop title */}
+                <h1 className="hidden md:block text-2xl font-bold mb-6">{t('nav.favorites')}</h1>
+                
                 {favoriteEvents.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6">
                         {favoriteEvents.map((event) => (
-                            <div key={event.id} className="event-card horizontal">
-                                <Link href={`/events/${event.slug}`} className="card-image">
+                            <div key={event.id} className="event-card horizontal md:flex-col md:p-0">
+                                <Link href={`/events/${event.slug}`} className="card-image md:w-full md:h-48 md:rounded-none md:rounded-t-xl">
                                     {event.image_url ? (
-                                        <img src={event.image_url} alt={event.title} />
+                                        <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
                                     ) : (
                                         <div
                                             className="w-full h-full flex items-center justify-center"
                                             style={{ backgroundColor: event.category.color + '20' }}
                                         >
-                                            <span className="text-2xl">📅</span>
+                                            <span className="text-2xl md:text-4xl">📅</span>
                                         </div>
                                     )}
                                 </Link>
-                                <div className="card-content flex-1">
+                                <div className="card-content flex-1 md:p-4">
                                     <Link href={`/events/${event.slug}`}>
                                         <h3>{event.title}</h3>
                                     </Link>
@@ -86,11 +89,21 @@ export default function Favorites({ events }: Props) {
                                         <MapPin className="w-3 h-3" />
                                         <span>{event.town.name}</span>
                                     </div>
+                                    <div className="md:flex md:justify-end md:mt-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleFavorite(event.id)}
+                                            className="favorite-btn active shrink-0 hidden md:flex"
+                                            aria-label={t('events.remove_favorite')}
+                                        >
+                                            <Heart className="w-5 h-5 fill-current text-red-500" />
+                                        </button>
+                                    </div>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => toggleFavorite(event.id)}
-                                    className="favorite-btn active shrink-0"
+                                    className="favorite-btn active shrink-0 md:hidden"
                                     aria-label={t('events.remove_favorite')}
                                 >
                                     <Heart className="w-5 h-5 fill-current" />

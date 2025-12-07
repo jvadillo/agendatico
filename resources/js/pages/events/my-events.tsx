@@ -49,8 +49,8 @@ export default function MyEvents({ events }: Props) {
         <MobileLayout>
             <Head title={t('auth.my_events')} />
 
-            {/* Header */}
-            <header className="sticky top-0 z-40 bg-background border-b border-border">
+            {/* Header - mobile only */}
+            <header className="sticky top-0 z-40 bg-background border-b border-border md:hidden">
                 <div className="flex items-center gap-3 p-4">
                     <Link href="/settings/profile" className="icon-btn">
                         <ChevronLeft className="w-5 h-5" />
@@ -61,30 +61,33 @@ export default function MyEvents({ events }: Props) {
 
             {/* Content */}
             <main className="p-4">
+                {/* Desktop title */}
+                <h1 className="hidden md:block text-2xl font-bold mb-6">{t('auth.my_events')}</h1>
+                
                 {events.data.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6">
                         {events.data.map((event) => (
                             <Link
                                 key={event.id}
                                 href={`/events/${event.slug}`}
                                 className={cn(
-                                    'event-card horizontal',
+                                    'event-card horizontal md:flex-col md:p-0',
                                     event.deleted_at && 'opacity-50'
                                 )}
                             >
-                                <div className="card-image">
+                                <div className="card-image md:w-full md:h-48 md:rounded-none md:rounded-t-xl">
                                     {event.image_url ? (
-                                        <img src={event.image_url} alt={event.title} />
+                                        <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
                                     ) : (
                                         <div
                                             className="w-full h-full flex items-center justify-center"
                                             style={{ backgroundColor: event.category.color + '20' }}
                                         >
-                                            <span className="text-2xl">📅</span>
+                                            <span className="text-2xl md:text-4xl">📅</span>
                                         </div>
                                     )}
                                 </div>
-                                <div className="card-content">
+                                <div className="card-content md:p-4">
                                     <h3>{event.title}</h3>
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                                         <Calendar className="w-3 h-3" />

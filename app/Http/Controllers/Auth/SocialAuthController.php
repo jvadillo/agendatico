@@ -13,7 +13,7 @@ class SocialAuthController extends Controller
     /**
      * Supported OAuth providers
      */
-    protected array $providers = ['google', 'facebook', 'apple'];
+    protected array $providers = ['google', 'facebook'];
 
     /**
      * Redirect to provider for authentication

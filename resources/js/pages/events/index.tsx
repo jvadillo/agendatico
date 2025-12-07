@@ -231,9 +231,9 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                     </Link>
                 </div>
 
-                {/* Events List */}
+                {/* Events List - Responsive grid on desktop */}
                 {events.data.length > 0 ? (
-                    <div className="space-y-4">
+                    <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6">
                         {events.data.map((event) => {
                             const eventDate = new Date(event.starts_at);
                             const formattedDate = format(eventDate, 'd MMM', { locale: dateLocale });
@@ -244,10 +244,10 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                                 <Link
                                     key={event.id}
                                     href={`/events/${event.slug}`}
-                                    className="flex gap-4 group"
+                                    className="flex gap-4 group md:flex-col md:gap-0 md:rounded-xl md:border md:border-border md:overflow-hidden md:bg-card md:hover:shadow-lg md:transition-shadow"
                                 >
                                     {/* Image */}
-                                    <div className="w-28 h-28 rounded-xl overflow-hidden bg-muted shrink-0">
+                                    <div className="w-28 h-28 rounded-xl overflow-hidden bg-muted shrink-0 md:w-full md:h-48 md:rounded-none">
                                         {event.image_url ? (
                                             <img 
                                                 src={event.image_url} 
@@ -257,7 +257,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                                             />
                                         ) : (
                                             <div 
-                                                className="w-full h-full flex items-center justify-center text-3xl"
+                                                className="w-full h-full flex items-center justify-center text-3xl md:text-5xl"
                                                 style={{ backgroundColor: event.category.color + '15' }}
                                             >
                                                 {categoryIcons[event.category.slug] || '📅'}
@@ -266,7 +266,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                                     </div>
 
                                     {/* Content */}
-                                    <div className="flex-1 min-w-0 py-1">
+                                    <div className="flex-1 min-w-0 py-1 md:p-4">
                                         <h3 className="font-semibold text-base leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                                             {event.title}
                                         </h3>

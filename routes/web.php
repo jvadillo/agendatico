@@ -37,9 +37,6 @@ Route::post('/locale', [LocaleController::class, 'switch'])->name('locale.switch
 Route::get('/privacy', fn() => Inertia::render('legal/privacy'))->name('privacy');
 Route::get('/terms', fn() => Inertia::render('legal/terms'))->name('terms');
 
-// Favorites page (public, works with local storage for guests)
-Route::get('/favorites', [FavoriteController::class, 'page'])->name('favorites');
-
 // Favorites API
 Route::get('/api/favorites', [FavoriteController::class, 'index'])->name('api.favorites.index');
 
@@ -61,6 +58,9 @@ Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'
 */
 
 Route::middleware(['auth'])->group(function () {
+    // Favorites page (authenticated only)
+    Route::get('/favorites', [FavoriteController::class, 'page'])->name('favorites');
+
     // Create event
     Route::get('/publish', [EventController::class, 'create'])->name('events.create');
     Route::post('/events', [EventController::class, 'store'])->name('events.store');

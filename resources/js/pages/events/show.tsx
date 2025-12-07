@@ -157,62 +157,81 @@ export default function EventShow({ event }: Props) {
         <MobileLayout>
             <Head title={event.title} />
 
-            {/* Header Image */}
-            <div className="relative">
-                <div className="aspect-[4/3] bg-secondary">
-                    {event.image_url ? (
-                        <img
-                            src={event.image_url}
-                            alt={event.title}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div
-                            className="w-full h-full flex items-center justify-center"
-                            style={{ backgroundColor: event.category.color + '30' }}
-                        >
-                            <span className="text-6xl">📅</span>
+            {/* Desktop layout wrapper */}
+            <div className="md:py-8">
+                <div className="md:grid md:grid-cols-2 md:gap-8 md:items-start">
+                    {/* Header Image */}
+                    <div className="relative md:sticky md:top-24">
+                        <div className="aspect-[4/3] bg-secondary md:rounded-xl md:overflow-hidden">
+                            {event.image_url ? (
+                                <img
+                                    src={event.image_url}
+                                    alt={event.title}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div
+                                    className="w-full h-full flex items-center justify-center"
+                                    style={{ backgroundColor: event.category.color + '30' }}
+                                >
+                                    <span className="text-6xl">📅</span>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
 
-                {/* Navigation overlay */}
-                <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between">
-                    <Link href="/" className="icon-btn-overlay">
-                        <ChevronLeft className="w-5 h-5" />
-                    </Link>
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={handleShare}
-                            className="icon-btn-overlay"
-                        >
-                            <Share2 className="w-5 h-5" />
-                        </button>
-                        <button
-                            onClick={() => toggleFavorite(event.id)}
-                            className="icon-btn-overlay"
-                        >
-                            <Heart className={cn('w-5 h-5', favorited && 'fill-current text-red-500')} />
-                        </button>
+                        {/* Navigation overlay - mobile only */}
+                        <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between md:hidden">
+                            <Link href="/" className="icon-btn-overlay">
+                                <ChevronLeft className="w-5 h-5" />
+                            </Link>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={handleShare}
+                                    className="icon-btn-overlay"
+                                >
+                                    <Share2 className="w-5 h-5" />
+                                </button>
+                                <button
+                                    onClick={() => toggleFavorite(event.id)}
+                                    className="icon-btn-overlay"
+                                >
+                                    <Heart className={cn('w-5 h-5', favorited && 'fill-current text-red-500')} />
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            {/* Content */}
-            <div className="p-4 pb-24">
-                {/* Title & Price */}
-                <div className="flex items-start justify-between gap-4 mb-4">
-                    <h1 className="text-xl font-bold">{event.title}</h1>
-                    <span
-                        className="px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap"
-                        style={{
-                            backgroundColor: event.category.color + '20',
-                            color: event.category.color,
-                        }}
-                    >
-                        {priceDisplay}
-                    </span>
-                </div>
+                    {/* Content */}
+                    <div className="p-4 pb-24 md:p-0 md:pb-8">
+                        {/* Title & Price */}
+                        <div className="flex items-start justify-between gap-4 mb-4">
+                            <h1 className="text-xl md:text-3xl font-bold">{event.title}</h1>
+                            <span
+                                className="px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap"
+                                style={{
+                                    backgroundColor: event.category.color + '20',
+                                    color: event.category.color,
+                                }}
+                            >
+                                {priceDisplay}
+                            </span>
+                        </div>
+
+                        {/* Desktop action buttons */}
+                        <div className="hidden md:flex gap-2 mb-6">
+                            <Button
+                                onClick={() => toggleFavorite(event.id)}
+                                variant={favorited ? "default" : "outline"}
+                                className={cn(favorited && "bg-red-500 hover:bg-red-600")}
+                            >
+                                <Heart className={cn('w-4 h-4 mr-2', favorited && 'fill-current')} />
+                                {favorited ? t('events.saved') : t('events.save')}
+                            </Button>
+                            <Button onClick={handleShare} variant="outline">
+                                <Share2 className="w-4 h-4 mr-2" />
+                                {t('events.share')}
+                            </Button>
+                        </div>
 
                 {/* Date & Time */}
                 <div className="info-card mb-3">
@@ -326,8 +345,8 @@ export default function EventShow({ event }: Props) {
                     </section>
                 )}
 
-                {/* Share Button */}
-                <section className="mb-6">
+                {/* Share Button - mobile only */}
+                <section className="mb-6 md:hidden">
                     <Button
                         onClick={handleShare}
                         variant="outline"
@@ -364,6 +383,8 @@ export default function EventShow({ event }: Props) {
                         </div>
                     </section>
                 )}
+                    </div>
+                </div>
             </div>
 
         </MobileLayout>

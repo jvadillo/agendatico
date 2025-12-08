@@ -48,15 +48,12 @@ export function useTranslation() {
     );
 
     const setLocale = useCallback((newLocale: string) => {
-        fetch('/locale', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-            },
-            body: JSON.stringify({ locale: newLocale }),
-        }).then(() => {
-            router.reload();
+        router.post('/locale', { locale: newLocale }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                // Optional: Force a hard reload if needed, but Inertia should handle it
+                // window.location.reload();
+            }
         });
     }, []);
 

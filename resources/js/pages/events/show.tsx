@@ -155,7 +155,12 @@ export default function EventShow({ event }: Props) {
 
     return (
         <MobileLayout>
-            <Head title={event.title} />
+            <Head title={event.title}>
+                <meta property="og:title" content={event.title} />
+                <meta property="og:description" content={`${formattedDate} • ${event.town.name}`} />
+                {event.image_url && <meta property="og:image" content={event.image_url} />}
+                <meta property="og:type" content="website" />
+            </Head>
 
             {/* Desktop layout wrapper */}
             <div className="md:py-8 md:px-6">

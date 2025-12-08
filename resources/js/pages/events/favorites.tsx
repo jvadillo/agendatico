@@ -106,7 +106,7 @@ export default function Favorites({ events }: Props) {
                                     className="favorite-btn active shrink-0 md:hidden"
                                     aria-label={t('events.remove_favorite')}
                                 >
-                                    <Heart className="w-5 h-5 fill-current" />
+                                    <Heart className="w-5 h-5 fill-current text-red-500" />
                                 </button>
                             </div>
                         ))}

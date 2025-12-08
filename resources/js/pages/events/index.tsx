@@ -151,21 +151,26 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                 <div className="px-4 mb-4 md:hidden">
                     <form onSubmit={handleSearch} className="flex items-center gap-3">
                         <div className="relative flex-1">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                             <input
                                 type="text"
                                 placeholder={t('home.search_placeholder')}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full h-12 pl-12 pr-4 rounded-full bg-muted/50 border-0 text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                className="w-full h-12 pl-4 pr-14 rounded-full bg-background border border-border text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
                             />
+                            <button
+                                type="submit"
+                                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors"
+                            >
+                                <Search className="w-4 h-4" />
+                            </button>
                         </div>
                         <button
                             type="button"
                             onClick={() => setShowFiltersModal(true)}
-                            className="w-12 h-12 rounded-full bg-violet-600 text-white flex items-center justify-center shrink-0 hover:bg-violet-700 transition-colors"
+                            className="w-12 h-12 rounded-full bg-background text-foreground border border-border flex items-center justify-center shrink-0 hover:border-foreground/30 transition-colors"
                         >
-                            <SlidersHorizontal className="w-5 h-5" />
+                            <SlidersHorizontal className="w-4 h-4" />
                         </button>
                     </form>
                 </div>
@@ -174,26 +179,26 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                 <div className="hidden md:block px-4 mb-4">
                     <form onSubmit={handleSearch} className="flex items-center gap-3">
                         <div className="relative flex-1">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                             <input
                                 type="text"
                                 placeholder={t('home.search_placeholder')}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full h-12 pl-12 pr-4 rounded-full bg-muted/50 border-0 text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                className="w-full h-12 pl-4 pr-14 rounded-full bg-background border border-border text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
                             />
+                            <button
+                                type="submit"
+                                className="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors"
+                            >
+                                <Search className="w-4 h-4" />
+                            </button>
                         </div>
                         
                         {/* Location & Date Pills inline */}
                         <button
                             type="button"
                             onClick={() => setShowLocationModal(true)}
-                            className={cn(
-                                "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer",
-                                filters.town 
-                                    ? "bg-foreground text-background" 
-                                    : "bg-foreground text-background"
-                            )}
+                            className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer bg-background text-foreground border border-border hover:border-foreground/30"
                         >
                             <MapPin className="w-4 h-4" />
                             {currentTown?.name || t('home.any_location')}
@@ -201,12 +206,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                         <button
                             type="button"
                             onClick={() => setShowDateModal(true)}
-                            className={cn(
-                                "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer",
-                                filters.date 
-                                    ? "bg-foreground text-background" 
-                                    : "bg-foreground text-background"
-                            )}
+                            className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer bg-background text-foreground border border-border hover:border-foreground/30"
                         >
                             <Calendar className="w-4 h-4" />
                             {filters.date ? dateLabels[filters.date] : t('home.any_date')}
@@ -215,9 +215,9 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                         <button
                             type="button"
                             onClick={() => setShowFiltersModal(true)}
-                            className="w-12 h-12 rounded-full bg-violet-600 text-white flex items-center justify-center shrink-0 hover:bg-violet-700 transition-colors"
+                            className="w-12 h-12 rounded-full bg-background text-foreground border border-border flex items-center justify-center shrink-0 hover:border-foreground/30 transition-colors"
                         >
-                            <SlidersHorizontal className="w-5 h-5" />
+                            <SlidersHorizontal className="w-4 h-4" />
                         </button>
                     </form>
                 </div>
@@ -226,24 +226,14 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                 <div className="flex gap-2 px-4 mb-4 md:hidden">
                     <button
                         onClick={() => setShowLocationModal(true)}
-                        className={cn(
-                            "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer",
-                            filters.town 
-                                ? "bg-foreground text-background" 
-                                : "bg-foreground text-background"
-                        )}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer bg-background text-foreground border border-border hover:border-foreground/30"
                     >
                         <MapPin className="w-4 h-4" />
                         {currentTown?.name || t('home.any_location')}
                     </button>
                     <button
                         onClick={() => setShowDateModal(true)}
-                        className={cn(
-                            "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer",
-                            filters.date 
-                                ? "bg-foreground text-background" 
-                                : "bg-foreground text-background"
-                        )}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors cursor-pointer bg-background text-foreground border border-border hover:border-foreground/30"
                     >
                         <Calendar className="w-4 h-4" />
                         {filters.date ? dateLabels[filters.date] : t('home.any_date')}
@@ -259,7 +249,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                             className={cn(
                                 "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border cursor-pointer md:mb-0",
                                 filters.category === String(category.id)
-                                    ? "bg-foreground text-background border-foreground"
+                                    ? "bg-[#3154C2] text-white border-[#3154C2]"
                                     : "bg-background text-foreground border-border hover:border-foreground/30"
                             )}
                         >

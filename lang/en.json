@@ -176,6 +176,7 @@
     "legal": {
         "privacy_title": "Privacy Policy",
         "terms_title": "Terms and Conditions",
+        "data_deletion_title": "Data Deletion",
         "last_updated": "Last updated"
     }
 }

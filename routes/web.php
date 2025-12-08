@@ -36,6 +36,7 @@ Route::post('/locale', [LocaleController::class, 'switch'])->name('locale.switch
 // Legal pages
 Route::get('/privacy', fn() => Inertia::render('legal/privacy'))->name('privacy');
 Route::get('/terms', fn() => Inertia::render('legal/terms'))->name('terms');
+Route::get('/data-deletion', fn() => Inertia::render('legal/data-deletion'))->name('data-deletion');
 
 // Favorites API
 Route::get('/api/favorites', [FavoriteController::class, 'index'])->name('api.favorites.index');

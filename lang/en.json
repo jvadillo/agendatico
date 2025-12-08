@@ -30,6 +30,7 @@
         "date": "Date",
         "price": "Price",
         "category": "Category",
+        "any_category": "Any category",
         "clear": "Clear",
         "show_results": "Show results",
         "today": "Today",

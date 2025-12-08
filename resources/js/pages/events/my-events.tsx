@@ -60,7 +60,7 @@ export default function MyEvents({ events }: Props) {
             </header>
 
             {/* Content */}
-            <main className="p-4">
+            <main className="p-4 md:px-6">
                 {/* Desktop title */}
                 <h1 className="hidden md:block text-2xl font-bold mb-6">{t('auth.my_events')}</h1>
                 

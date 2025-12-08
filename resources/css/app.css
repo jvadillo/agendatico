@@ -172,7 +172,7 @@
     /* Tablet and up: full width, no bottom padding */
     @media (min-width: 768px) {
         .responsive-container {
-            @apply max-w-7xl mx-auto px-6;
+            @apply max-w-7xl mx-auto;
             padding-bottom: 2rem;
         }
     }

@@ -158,7 +158,7 @@ export default function EventShow({ event }: Props) {
             <Head title={event.title} />
 
             {/* Desktop layout wrapper */}
-            <div className="md:py-8">
+            <div className="md:py-8 md:px-6">
                 <div className="md:grid md:grid-cols-2 md:gap-8 md:items-start">
                     {/* Header Image */}
                     <div className="relative md:sticky md:top-24">

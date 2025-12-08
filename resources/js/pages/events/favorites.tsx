@@ -55,7 +55,7 @@ export default function Favorites({ events }: Props) {
             </header>
 
             {/* Content */}
-            <main className="p-4 safe-bottom">
+            <main className="p-4 md:px-6 safe-bottom">
                 {/* Desktop title */}
                 <h1 className="hidden md:block text-2xl font-bold mb-6">{t('nav.favorites')}</h1>
                 

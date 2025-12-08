@@ -148,7 +148,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
             {/* Header */}
             <header className="bg-background pt-4 pb-2">
                 {/* Search Bar - Mobile */}
-                <div className="px-4 mb-4 md:hidden">
+                <div className="px-4 md:px-6 mb-4 md:hidden">
                     <form onSubmit={handleSearch} className="flex items-center gap-3">
                         <div className="relative flex-1">
                             <input
@@ -176,7 +176,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                 </div>
 
                 {/* Search Bar + Filters - Desktop (all in one line) */}
-                <div className="hidden md:block px-4 mb-4">
+                <div className="hidden md:block px-6 mb-4">
                     <form onSubmit={handleSearch} className="flex items-center gap-3">
                         <div className="relative flex-1">
                             <input
@@ -240,8 +240,8 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                     </button>
                 </div>
 
-                {/* Category Chips - Horizontal Scroll on mobile, wrap on desktop */}
-                <div className="scroll-container px-4 md:flex md:flex-wrap md:gap-2">
+                {/* Category Chips - Horizontal Scroll on mobile, wrap on desktop - HIDDEN */}
+                <div className="hidden scroll-container px-4 md:px-6 md:flex md:flex-wrap md:gap-2">
                     {categories.map((category) => (
                         <button
                             key={category.id}
@@ -261,7 +261,7 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
             </header>
 
             {/* Content */}
-            <main className="px-4 pt-6 pb-4">
+            <main className="px-4 md:px-6 pt-6 pb-4">
                 {/* Section Header */}
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold">{t('home.upcoming_events')}</h2>
@@ -529,6 +529,33 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                         >
                             {t('filters.this_month')}
                         </RadioOption>
+                    </div>
+                </FilterSection>
+
+                <FilterSection title={t('filters.category')}>
+                    <div className="space-y-1">
+                        <RadioOption
+                            name="filter-category"
+                            value=""
+                            checked={!localFilters.category}
+                            onChange={() => setLocalFilters(f => ({ ...f, category: null }))}
+                        >
+                            {t('filters.any_category')}
+                        </RadioOption>
+                        {categories.map((category) => (
+                            <RadioOption
+                                key={category.id}
+                                name="filter-category"
+                                value={String(category.id)}
+                                checked={localFilters.category === String(category.id)}
+                                onChange={(value) => setLocalFilters(f => ({ ...f, category: value }))}
+                            >
+                                <span className="flex items-center gap-2">
+                                    <span>{categoryIcons[category.slug] || '📌'}</span>
+                                    {category.name}
+                                </span>
+                            </RadioOption>
+                        ))}
                     </div>
                 </FilterSection>
 

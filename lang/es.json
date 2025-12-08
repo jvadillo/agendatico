@@ -30,6 +30,7 @@
         "date": "Fecha",
         "price": "Precio",
         "category": "Categoría",
+        "any_category": "Cualquier categoría",
         "clear": "Limpiar",
         "show_results": "Mostrar resultados",
         "today": "Hoy",

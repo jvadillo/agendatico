@@ -38,7 +38,7 @@ export function DesktopHeader() {
 
     return (
         <header className="hidden md:flex sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-16 items-center justify-between mx-auto">
+            <div className="w-full max-w-7xl flex h-16 items-center justify-between mx-auto px-6">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
                     <img src="/logo.png" alt="Agendatico" className="h-8" />
@@ -55,8 +55,8 @@ export function DesktopHeader() {
                                 className={cn(
                                     'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
                                     item.match(url)
-                                        ? 'bg-primary/10 text-primary'
-                                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                                        ? 'text-primary'
+                                        : 'text-foreground hover:text-primary'
                                 )}
                             >
                                 <item.icon className="w-4 h-4" />

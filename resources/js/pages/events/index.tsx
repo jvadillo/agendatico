@@ -3,8 +3,10 @@ import { useState, useCallback } from 'react';
 import { Search, SlidersHorizontal, MapPin, Calendar, Heart, Clock } from 'lucide-react';
 import MobileLayout from '@/layouts/mobile-layout';
 import { FilterModal, FilterSection, RadioOption } from '@/components/filter-modal';
+import { SplashScreen } from '@/components/splash-screen';
 import { useTranslation } from '@/hooks/use-translation';
 import { useFavorites } from '@/hooks/use-favorites';
+import { useSplashScreen } from '@/hooks/use-splash-screen';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
@@ -64,6 +66,7 @@ interface Props {
 export default function EventsIndex({ events, towns, categories, filters }: Props) {
     const { t, locale } = useTranslation();
     const { toggleFavorite, isFavorited } = useFavorites();
+    const { showSplash, isExiting, handleSplashComplete } = useSplashScreen();
     const dateLocale = locale === 'es' ? es : enUS;
     
     const [searchQuery, setSearchQuery] = useState(filters.search || '');
@@ -144,6 +147,12 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
     return (
         <MobileLayout>
             <Head title={t('home.upcoming_events')} />
+
+            {/* Splash Screen - Solo móvil */}
+            <SplashScreen 
+                isVisible={showSplash || isExiting} 
+                onComplete={handleSplashComplete} 
+            />
 
             {/* Header */}
             <header className="bg-background pt-4 pb-2">

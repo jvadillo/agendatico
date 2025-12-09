@@ -55,6 +55,27 @@ class TownSeeder extends Seeder
                 'longitude' => -82.7833,
                 'sort_order' => 6,
             ],
+            [
+                'name' => 'Limón',
+                'slug' => 'limon',
+                'latitude' => 10.0000,
+                'longitude' => -83.0333,
+                'sort_order' => 7,
+            ],
+            [
+                'name' => 'Bribri',
+                'slug' => 'bribri',
+                'latitude' => 9.6167,
+                'longitude' => -82.8500,
+                'sort_order' => 8,
+            ],
+            [
+                'name' => 'Sixaola',
+                'slug' => 'sixaola',
+                'latitude' => 9.4500,
+                'longitude' => -82.6167,
+                'sort_order' => 9,
+            ],
         ];
 
         foreach ($towns as $town) {

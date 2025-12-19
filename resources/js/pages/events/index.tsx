@@ -76,6 +76,11 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
     
     // Local filter state for modals
     const [localFilters, setLocalFilters] = useState<Filters>(filters);
+    
+    // Accumulated events for load more functionality
+    const [allEvents, setAllEvents] = useState<Event[]>(events.data);
+    const [nextPageUrl, setNextPageUrl] = useState(events.next_page_url);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const applyFilters = useCallback((newFilters: Partial<Filters>) => {
         const merged = { ...filters, ...newFilters };
@@ -88,8 +93,13 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
         }, {
             preserveState: true,
             preserveScroll: true,
+            onSuccess: () => {
+                // Reset accumulated events when filters change
+                setAllEvents(events.data);
+                setNextPageUrl(events.next_page_url);
+            },
         });
-    }, [filters]);
+    }, [filters, events]);
 
     const handleSearch = useCallback((e: React.FormEvent) => {
         e.preventDefault();
@@ -283,9 +293,9 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                 </div>
 
                 {/* Events List - Responsive grid on desktop */}
-                {events.data.length > 0 ? (
+                {allEvents.length > 0 ? (
                     <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6">
-                        {events.data.map((event) => {
+                        {allEvents.map((event) => {
                             const eventDate = new Date(event.starts_at);
                             const formattedDate = format(eventDate, 'd MMM', { locale: dateLocale });
                             const formattedTime = format(eventDate, 'h:mma', { locale: dateLocale });
@@ -371,13 +381,33 @@ export default function EventsIndex({ events, towns, categories, filters }: Prop
                 )}
 
                 {/* Load More */}
-                {events.next_page_url && (
+                {nextPageUrl && (
                     <div className="mt-8 text-center">
                         <button
-                            onClick={() => router.get(events.next_page_url!, {}, { preserveState: true, preserveScroll: true })}
-                            className="text-primary font-medium hover:underline"
+                            onClick={() => {
+                                if (isLoadingMore || !nextPageUrl) return;
+                                
+                                setIsLoadingMore(true);
+                                
+                                router.get(nextPageUrl, {}, {
+                                    preserveState: true,
+                                    preserveScroll: true,
+                                    only: ['events'],
+                                    onSuccess: (page) => {
+                                        const newEvents = (page as unknown as { props: { events: PaginatedEvents } }).props.events;
+                                        setAllEvents(prev => [...prev, ...newEvents.data]);
+                                        setNextPageUrl(newEvents.next_page_url);
+                                        setIsLoadingMore(false);
+                                    },
+                                    onError: () => {
+                                        setIsLoadingMore(false);
+                                    },
+                                });
+                            }}
+                            disabled={isLoadingMore}
+                            className="text-primary font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {t('home.load_more')}
+                            {isLoadingMore ? '...' : t('home.load_more')}
                         </button>
                     </div>
                 )}

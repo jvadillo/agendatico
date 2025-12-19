@@ -108,7 +108,13 @@
         "update": "Guardar cambios",
         "delete": "Eliminar evento",
         "delete_confirm": "¿Estás seguro de que deseas eliminar este evento?",
-        "login_required": "Debes iniciar sesión para publicar un evento"
+        "login_required": "Debes iniciar sesión para publicar un evento",
+        "is_recurring": "Este evento se repite",
+        "recurrence_frequency": "Frecuencia",
+        "select_frequency": "Selecciona la frecuencia",
+        "weekly": "Semanal",
+        "monthly": "Mensual",
+        "recurrence_end_date": "Fecha de finalización"
     },
     "auth": {
         "login": "Iniciar sesión",
@@ -174,7 +180,8 @@
         "event_deleted": "Evento eliminado",
         "favorite_added": "Añadido a favoritos",
         "favorite_removed": "Eliminado de favoritos",
-        "error_generic": "Algo salió mal. Inténtalo de nuevo."
+        "error_generic": "Algo salió mal. Inténtalo de nuevo.",
+        "recurring_events_created": "Se han creado :count eventos correctamente"
     },
     "legal": {
         "privacy_title": "Política de Privacidad",

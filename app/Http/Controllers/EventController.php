@@ -82,11 +82,29 @@ class EventController extends Controller
             $data['image_path'] = $request->file('image')->store('events', 'public');
         }
 
-        $event = Event::create($data);
+        // Remove recurring fields from event data
+        $isRecurring = $data['is_recurring'] ?? false;
+        $recurrenceFrequency = $data['recurrence_frequency'] ?? null;
+        $recurrenceEndDate = $data['recurrence_end_date'] ?? null;
+        
+        unset($data['is_recurring'], $data['recurrence_frequency'], $data['recurrence_end_date']);
 
-        return redirect()
-            ->route('events.show', $event)
-            ->with('success', __('messages.event_created'));
+        if ($isRecurring && $recurrenceFrequency && $recurrenceEndDate) {
+            // Create multiple events
+            $events = $this->createRecurringEvents($data, $recurrenceFrequency, $recurrenceEndDate);
+            $firstEvent = $events->first();
+            
+            return redirect()
+                ->route('events.show', $firstEvent)
+                ->with('success', __('messages.recurring_events_created', ['count' => $events->count()]));
+        } else {
+            // Create single event
+            $event = Event::create($data);
+            
+            return redirect()
+                ->route('events.show', $event)
+                ->with('success', __('messages.event_created'));
+        }
     }
 
     /**
@@ -190,5 +208,50 @@ class EventController extends Controller
         return Inertia::render('events/my-events', [
             'events' => $events,
         ]);
+    }
+
+    /**
+     * Create multiple recurring events.
+     */
+    private function createRecurringEvents(array $baseData, string $frequency, string $endDate)
+    {
+        $events = collect();
+        $startDate = new \DateTime($baseData['starts_at']);
+        $endDateTime = new \DateTime($endDate);
+        
+        // Calculate duration
+        $duration = null;
+        if (!empty($baseData['ends_at'])) {
+            $endsAt = new \DateTime($baseData['ends_at']);
+            $duration = $startDate->diff($endsAt);
+        }
+        
+        $current = clone $startDate;
+        $count = 0;
+        
+        while ($current <= $endDateTime && $count < 20) {
+            $eventData = $baseData;
+            $eventData['starts_at'] = $current->format('Y-m-d H:i:s');
+            
+            if ($duration) {
+                $currentEnd = clone $current;
+                $currentEnd->add($duration);
+                $eventData['ends_at'] = $currentEnd->format('Y-m-d H:i:s');
+            }
+            
+            $event = Event::create($eventData);
+            $events->push($event);
+            
+            // Move to next occurrence
+            if ($frequency === 'weekly') {
+                $current->modify('+7 days');
+            } elseif ($frequency === 'monthly') {
+                $current->modify('+1 month');
+            }
+            
+            $count++;
+        }
+        
+        return $events;
     }
 }

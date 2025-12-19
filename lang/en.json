@@ -108,7 +108,13 @@
         "update": "Save changes",
         "delete": "Delete event",
         "delete_confirm": "Are you sure you want to delete this event?",
-        "login_required": "You must log in to publish an event"
+        "login_required": "You must log in to publish an event",
+        "is_recurring": "This event repeats",
+        "recurrence_frequency": "Frequency",
+        "select_frequency": "Select frequency",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "recurrence_end_date": "End date"
     },
     "auth": {
         "login": "Log in",
@@ -174,7 +180,8 @@
         "event_deleted": "Event deleted",
         "favorite_added": "Added to favorites",
         "favorite_removed": "Removed from favorites",
-        "error_generic": "Something went wrong. Please try again."
+        "error_generic": "Something went wrong. Please try again.",
+        "recurring_events_created": ":count events created successfully"
     },
     "legal": {
         "privacy_title": "Privacy Policy",

@@ -66,7 +66,37 @@ export default function EventCreate({ towns, categories, places }: Props) {
         whatsapp_url: '',
         website_url: '',
         image: null as File | null,
+        is_recurring: false,
+        recurrence_frequency: '',
+        recurrence_end_date: '',
     });
+
+    const [recurringError, setRecurringError] = useState<string>('');
+
+    const calculateEventCount = () => {
+        if (!data.is_recurring || !data.starts_at || !data.recurrence_frequency || !data.recurrence_end_date) {
+            return 0;
+        }
+        
+        const start = new Date(data.starts_at);
+        const end = new Date(data.recurrence_end_date);
+        
+        if (end <= start) return 0;
+        
+        let count = 0;
+        const current = new Date(start);
+        
+        while (current <= end && count <= 30) {
+            count++;
+            if (data.recurrence_frequency === 'weekly') {
+                current.setDate(current.getDate() + 7);
+            } else if (data.recurrence_frequency === 'monthly') {
+                current.setMonth(current.getMonth() + 1);
+            }
+        }
+        
+        return count;
+    };
 
     // Filter places when town changes - use useMemo instead of useEffect
     const filteredPlaces = useMemo(() => {
@@ -85,6 +115,16 @@ export default function EventCreate({ towns, categories, places }: Props) {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        setRecurringError('');
+        
+        if (data.is_recurring) {
+            const count = calculateEventCount();
+            if (count > 20) {
+                setRecurringError(`No se pueden crear más de 20 eventos de forma periódica. Esta configuración crearía ${count} eventos.`);
+                return;
+            }
+        }
+        
         post('/events', {
             forceFormData: true,
         });
@@ -207,6 +247,75 @@ export default function EventCreate({ towns, categories, places }: Props) {
                             onChange={(e) => setData('ends_at', e.target.value)}
                         />
                     </div>
+                </div>
+
+                {/* Recurring Event */}
+                <div className="mb-4 p-4 border border-border rounded-lg bg-secondary/30">
+                    <label className="flex items-center gap-2 cursor-pointer mb-3">
+                        <input
+                            type="checkbox"
+                            checked={data.is_recurring}
+                            onChange={(e) => {
+                                setData('is_recurring', e.target.checked);
+                                if (!e.target.checked) {
+                                    setData('recurrence_frequency', '');
+                                    setData('recurrence_end_date', '');
+                                    setRecurringError('');
+                                }
+                            }}
+                            className="w-4 h-4 rounded border-input"
+                        />
+                        <span className="font-medium">{t('publish.is_recurring')}</span>
+                    </label>
+                    
+                    {data.is_recurring && (
+                        <div className="space-y-3 pl-6">
+                            <div>
+                                <Label>{t('publish.recurrence_frequency')}</Label>
+                                <Select 
+                                    value={data.recurrence_frequency} 
+                                    onValueChange={(value) => {
+                                        setData('recurrence_frequency', value);
+                                        setRecurringError('');
+                                    }}
+                                >
+                                    <SelectTrigger className={cn(errors.recurrence_frequency && 'border-destructive')}>
+                                        <SelectValue placeholder={t('publish.select_frequency')} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="weekly">{t('publish.weekly')}</SelectItem>
+                                        <SelectItem value="monthly">{t('publish.monthly')}</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                {errors.recurrence_frequency && (
+                                    <p className="text-sm text-destructive mt-1">{errors.recurrence_frequency}</p>
+                                )}
+                            </div>
+                            
+                            <div>
+                                <Label htmlFor="recurrence_end_date">{t('publish.recurrence_end_date')}</Label>
+                                <Input
+                                    id="recurrence_end_date"
+                                    type="date"
+                                    value={data.recurrence_end_date}
+                                    onChange={(e) => {
+                                        setData('recurrence_end_date', e.target.value);
+                                        setRecurringError('');
+                                    }}
+                                    className={cn(errors.recurrence_end_date && 'border-destructive')}
+                                />
+                                {errors.recurrence_end_date && (
+                                    <p className="text-sm text-destructive mt-1">{errors.recurrence_end_date}</p>
+                                )}
+                            </div>
+                            
+                            {recurringError && (
+                                <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
+                                    {recurringError}
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* Category */}

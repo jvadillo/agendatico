@@ -37,7 +37,58 @@ class StoreEventRequest extends FormRequest
             'instagram_url' => ['nullable', 'string', 'max:255'],
             'whatsapp_url' => ['nullable', 'string', 'max:255'],
             'website_url' => ['nullable', 'url', 'max:255'],
+            'is_recurring' => ['nullable', 'boolean'],
+            'recurrence_frequency' => ['nullable', 'required_if:is_recurring,true', 'in:weekly,monthly'],
+            'recurrence_end_date' => ['nullable', 'required_if:is_recurring,true', 'date', 'after:starts_at'],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        if ($this->boolean('is_recurring')) {
+            $count = $this->calculateEventCount();
+            if ($count > 20) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'is_recurring' => "No se pueden crear más de 20 eventos de forma periódica. Esta configuración crearía {$count} eventos."
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Calculate the number of events that would be created.
+     */
+    private function calculateEventCount(): int
+    {
+        if (!$this->starts_at || !$this->recurrence_end_date || !$this->recurrence_frequency) {
+            return 0;
+        }
+        
+        try {
+            $start = new \DateTime($this->starts_at);
+            $end = new \DateTime($this->recurrence_end_date);
+        } catch (\Exception $e) {
+            return 0;
+        }
+        
+        if ($end <= $start) return 0;
+        
+        $count = 0;
+        $current = clone $start;
+        
+        while ($current <= $end && $count <= 30) {
+            $count++;
+            if ($this->recurrence_frequency === 'weekly') {
+                $current->modify('+7 days');
+            } elseif ($this->recurrence_frequency === 'monthly') {
+                $current->modify('+1 month');
+            }
+        }
+        
+        return $count;
     }
 
     /**
